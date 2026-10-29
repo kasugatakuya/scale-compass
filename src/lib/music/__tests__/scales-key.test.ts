@@ -20,6 +20,8 @@ describe("scales", () => {
     expect(scaleNotes(SCALE_BY_ID["phrygian-dominant"], "E", 4).map((n) => n.name)).toEqual(["E", "F", "G♯", "A", "B", "C", "D"]);
     expect(scalePcs(SCALE_BY_ID.blues, 9)).toEqual([9, 0, 2, 3, 4, 7]);
     expect(scalePcs(SCALE_BY_ID["whole-tone"], 0)).toEqual([0, 2, 4, 6, 8, 10]);
+    expect(scaleNotes(SCALE_BY_ID.ryukyu, "C", 0).map((n) => n.name)).toEqual(["C", "E", "F", "G", "B"]);
+    expect(scaleNotes(SCALE_BY_ID.ryukyu, "C", 0).map((n) => n.degree)).toEqual(["R", "3", "4", "5", "7"]);
   });
   it("コードトーンを含むスケールを探せる", () => {
     const ids = scalesContaining([0, 4, 7, 10], 0).map((s) => s.id);

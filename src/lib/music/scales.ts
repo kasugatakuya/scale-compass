@@ -8,7 +8,7 @@ export type ScaleId =
   | "melodic-minor" | "dorian-b2" | "lydian-augmented" | "lydian-b7" | "mixolydian-b6" | "locrian-#2" | "altered"
   | "harmonic-minor" | "phrygian-dominant"
   | "whole-tone" | "diminished" | "combination-of-diminished"
-  | "major-pentatonic" | "minor-pentatonic" | "blues" | "major-blues"
+  | "major-pentatonic" | "minor-pentatonic" | "blues" | "major-blues" | "ryukyu"
   | "bebop-dominant";
 
 export type ScaleCategory =
@@ -59,6 +59,7 @@ export const SCALES: ScaleDef[] = [
   { id: "blues", nameJa: "ブルーススケール（マイナーブルース）", nameEn: "Blues scale", category: "blues", intervals: ["1P", "3m", "4P", "5d", "5P", "7m"], descriptionJa: "マイナーペンタに ♭5（ブルーノート）を加えた 6 音。ブルース／ロックの泥くさいフレーズに。" },
   { id: "major-blues", nameJa: "メジャーブルーススケール", nameEn: "Major blues scale", category: "blues", intervals: ["1P", "2M", "3m", "3M", "5P", "6M"], descriptionJa: "メジャーペンタに ♭3 を加えた 6 音。カントリー／ブルースの明るいフレーズに。" },
 
+  { id: "ryukyu", nameJa: "琉球スケール（沖縄音階）", nameEn: "Ryukyu scale", aliasesJa: ["沖縄スケール", "ニロ抜き長音階"], category: "pentatonic", intervals: ["1P", "3M", "4P", "5P", "7M"], descriptionJa: "メジャースケールから 2・6 度を抜いた 5 音（ニロ抜き）。沖縄民謡の独特の明るさと哀感を生む。4 度と長 7 度が半音でぶつかる動きが特徴。" },
   { id: "bebop-dominant", nameJa: "ビバップ・ドミナント", nameEn: "Bebop dominant", category: "bebop", intervals: ["1P", "2M", "3M", "4P", "5P", "6M", "7m", "7M"], descriptionJa: "ミクソリディアンに長 7 度を加えた 8 音。8 分音符でコードトーンが拍頭に来るジャズ用スケール。" },
 ];
 

@@ -40,11 +40,15 @@ describe("analysis: ダイアトニック", () => {
     expect(ids[0]).toBe("mixolydian");
     expect(ids.slice(0, 3)).toEqual(expect.arrayContaining(["altered", "combination-of-diminished"]));
   });
-  it("Cmaj7 → アイオニアン／リディアン", () => {
+  it("Cmaj7 → アイオニアン／リディアン（応用として琉球スケール）", () => {
     const ids = allIds(prog, 2);
     expect(ids[0]).toBe("ionian");
     expect(ids).toContain("lydian");
     expect(ids).toContain("major-pentatonic");
+    const ryukyu = suggestScales(a[2], C).find((s) => s.scale.id === "ryukyu")!;
+    expect(ryukyu.priority).toBe(3);
+    expect(ryukyu.coversChordTones).toBe(true);
+    expect(ryukyu.notes.map((n) => n.name)).toEqual(["C", "E", "F", "G", "B"]);
   });
   it("Am7 → エオリアン（ドリアンも候補）", () => {
     const ids = allIds(prog, 3);
@@ -240,5 +244,6 @@ describe("scale-rules: 整合性", () => {
     expect(keyScaleSuggestions(C)[0].scale.id).toBe("ionian");
     expect(keyScaleSuggestions(Am)[0].scale.id).toBe("aeolian");
     expect(keyScaleSuggestions(C)[0].notes.map((n) => n.name)).toEqual(["C", "D", "E", "F", "G", "A", "B"]);
+    expect(keyScaleSuggestions(C).some((s) => s.scale.id === "ryukyu")).toBe(true);
   });
 });

@@ -51,6 +51,7 @@ export const SCALE_RULES: ScaleRule[] = [
     { scaleId: "lydian", priority: 2, reasonJa: "4 度を ♯4 に替えるとアヴォイドが消え、浮遊感のあるモダンな響きになる。" },
     { scaleId: "major-pentatonic", priority: 2, reasonJa: "4・7 度を抜いた安全なメロディ。外しにくくフレーズが作りやすい。" },
     { scaleId: "major-blues", priority: 3, reasonJa: "♭3 を経過的に混ぜると、ブルース／カントリーの匂いが出る。" },
+    { scaleId: "ryukyu", priority: 3, reasonJa: "2・6 度を抜いた琉球スケール（ニロ抜き）。Ⅰ上で 4 度→3 度、7 度→ルートと半音で動かすと沖縄民謡の響きになる。" },
   ] },
   { id: "major-IV", match: { relation: ["diatonic"], keyMode: ["major"], interval: [5], quality: MAJ7ISH }, suggestions: [
     { scaleId: "lydian", priority: 1, reasonJa: "キーの構成音のままⅣから並べたモード。♯4 がアヴォイドにならず、maj7 上で最も自然。" },
@@ -115,6 +116,7 @@ export const SCALE_RULES: ScaleRule[] = [
     { scaleId: "ionian", priority: 1, reasonJa: "キーの構成音のまま ♭Ⅲ から並べたモード（関係調のメジャースケール）。" },
     { scaleId: "lydian", priority: 2, reasonJa: "♯4 でアヴォイドを消し、浮遊感を出す。" },
     { scaleId: "major-pentatonic", priority: 2, reasonJa: "安全なコードトーン中心のメロディ。" },
+    { scaleId: "ryukyu", priority: 3, reasonJa: "関係調のメジャーを琉球スケール（ニロ抜き）にして、沖縄民謡の色を足す。" },
   ] },
   { id: "minor-IV", match: { relation: ["diatonic"], keyMode: ["minor"], interval: [5], quality: MIN7ISH }, suggestions: [
     { scaleId: "dorian", priority: 1, reasonJa: "キーの構成音のままⅣから並べたモード。Ⅳm7 の定番。" },
@@ -300,6 +302,7 @@ export const SCALE_RULES: ScaleRule[] = [
     { scaleId: "lydian", priority: 1, reasonJa: "キー外の maj7 には、アヴォイドのないリディアンが万能。" },
     { scaleId: "ionian", priority: 2, reasonJa: "素直にそのコードのメジャースケール。" },
     { scaleId: "major-pentatonic", priority: 2, reasonJa: "コードトーン中心の安全策。" },
+    { scaleId: "ryukyu", priority: 3, reasonJa: "琉球スケール（R・3・4・5・7）で沖縄民謡風の色づけ。" },
   ] },
   { id: "nd-minor", match: { relation: ["non-diatonic"], quality: ["min", "m7", "m9"] }, suggestions: [
     { scaleId: "dorian", priority: 1, reasonJa: "キー外のマイナー 7th には、アヴォイドの少ないドリアンが万能。" },
@@ -522,6 +525,7 @@ export function keyScaleSuggestions(key: Key): KeyScaleSuggestion[] {
       mk("major-pentatonic", 2, "4・7 度を抜いた 5 音。どのダイアトニックコード上でも外れにくい。"),
       mk("minor-pentatonic", 3, "同主調マイナーのペンタ。Ⅰ7・Ⅳ7 を含むブルース進行や、ロックの ♭Ⅶ を含む進行で。"),
       mk("blues", 3, "ブルース進行（Ⅰ7-Ⅳ7-Ⅴ7）では、キーのブルーススケール 1 本で押し切れる。"),
+      mk("ryukyu", 3, "メジャースケールから 2・6 度を抜いた琉球スケール（R・3・4・5・7）。Ⅰ・Ⅳ・Ⅴ の進行に乗せると沖縄民謡風になる。"),
     ];
   }
   return [

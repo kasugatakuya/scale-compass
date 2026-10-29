@@ -56,7 +56,7 @@ export const CHORD_DOCS: ChordDoc[] = [
     formula: ["R", "3", "5"],
     sound: "明るく、安定した響き。すべてのコードの基準になる「ふつうの和音」です。",
     usage: "キーのⅠ・Ⅳ・Ⅴに現れる最も基本的なコード。ポップス、ロック、フォークの土台。",
-    scales: ["ionian", "lydian", "major-pentatonic", "mixolydian"],
+    scales: ["ionian", "lydian", "major-pentatonic", "mixolydian", "ryukyu"],
     tips: {
       guitar: "C・A・G・E・D の 5 つのオープンコードが、そのまま移動可能なバレーコード（CAGED システム）の原型になります。まずは E フォームと A フォームのバレーを押さえられるようにしましょう。",
       bass: "ルート→5 度→オクターブ上のルートの三角形が基本。3 度（長 3 度）を加えると明るさを強調できますが、コードが鳴っているときは 3 度を長く伸ばしすぎないのが無難です。",
