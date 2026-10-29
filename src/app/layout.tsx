@@ -3,8 +3,11 @@ import type { ReactNode } from "react";
 import { ThemeProvider } from "next-themes";
 import { Header } from "@/components/layout/Header";
 import "./globals.css";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  verification: { google: "r4vs5K6kyRpFbT2eQ3xlFxlQbUmRrk_8z6irkNv4HmM" },
   title: {
     default: "Scale Compass｜コード進行から使えるスケールを提案",
     template: "%s｜Scale Compass",
@@ -27,13 +30,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ja" suppressHydrationWarning className="h-full">
       <body className="min-h-full flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <Header />
-          <main id="main" className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6">
+          <main
+            id="main"
+            className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6"
+          >
             {children}
           </main>
           <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">
-            Scale Compass — コード進行の中で「どのスケールを使えばいいか」の道しるべ
+            Scale Compass —
+            コード進行の中で「どのスケールを使えばいいか」の道しるべ
           </footer>
         </ThemeProvider>
       </body>
