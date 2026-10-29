@@ -67,12 +67,14 @@ export const SCALE_RULES: ScaleRule[] = [
     { scaleId: "phrygian", priority: 1, reasonJa: "キーの構成音のままⅢから並べたモード。♭2（キーの 4 番目の音）はアヴォイド。" },
     { scaleId: "minor-pentatonic", priority: 2, reasonJa: "♭2 を避けられるので、安全にマイナーの響きを出せる。" },
     { scaleId: "aeolian", priority: 3, reasonJa: "Ⅲm7 をⅥm7 的（トニック代理）に扱うなら、2 度を長 2 度にして自然に。" },
+    { scaleId: "miyakobushi", priority: 3, reasonJa: "フリジアンの中の 5 音（R・♭2・4・5・♭6）を抜き出した都節音階。♭2 を使って和風のフレーズに。" },
   ] },
   { id: "major-VI", match: { relation: ["diatonic"], keyMode: ["major"], interval: [9], quality: MIN7ISH }, suggestions: [
     { scaleId: "aeolian", priority: 1, reasonJa: "キーの構成音のままⅥから並べたモード（関係調のナチュラルマイナー）。" },
     { scaleId: "dorian", priority: 2, reasonJa: "6 度を上げるとクールで明るめのマイナーに。Ⅵm7 をⅡm7 的に扱う発想。" },
     { scaleId: "minor-pentatonic", priority: 2, reasonJa: "ロック／ポップスのリードの定番。" },
     { scaleId: "blues", priority: 3, reasonJa: "♭5 を加えてブルージーに。" },
+    { scaleId: "minyo", priority: 3, reasonJa: "マイナーペンタと同じ 5 音を、4 度→♭3 や ♭7→5 の動きで扱うと民謡音階（和風）になる。" },
   ] },
   { id: "major-V", match: { relation: ["diatonic"], keyMode: ["major"], interval: [7], quality: PLAIN_DOM }, suggestions: [
     { scaleId: "mixolydian", priority: 1, reasonJa: "キーの構成音のままⅤから並べたモード。ドミナント 7th の基本。4 度はアヴォイド。" },
@@ -99,6 +101,8 @@ export const SCALE_RULES: ScaleRule[] = [
     { scaleId: "dorian", priority: 2, reasonJa: "6 度を上げるとクールで明るめの響き。ファンク／ジャズ寄り。" },
     { scaleId: "blues", priority: 2, reasonJa: "♭5 のブルーノートでロック／ブルースの泥くささを。" },
     { scaleId: "harmonic-minor", priority: 3, reasonJa: "7 度を上げるとクラシカル／ネオクラシカルな響き。Ⅴ7 への流れが強くなる。" },
+    { scaleId: "minyo", priority: 3, reasonJa: "マイナーペンタと同じ 5 音を民謡音階として扱い、4 度と R を核にすると日本民謡の響きになる。" },
+    { scaleId: "miyakobushi", priority: 3, reasonJa: "♭2・♭6 を含む都節音階で、三味線のような「陰」の和風フレーズに。♭3 を含まないのでコードの ♭3 は伴奏に任せる。" },
   ] },
   { id: "minor-Im6", match: { relation: ["diatonic"], keyMode: ["minor"], interval: [0], quality: ["m6"] }, suggestions: [
     { scaleId: "dorian", priority: 1, reasonJa: "m6 の長 6 度を含む。トニックマイナーの定番。" },
@@ -125,6 +129,7 @@ export const SCALE_RULES: ScaleRule[] = [
   { id: "minor-Vm", match: { relation: ["diatonic"], keyMode: ["minor"], interval: [7], quality: MIN7ISH }, suggestions: [
     { scaleId: "phrygian", priority: 1, reasonJa: "キーの構成音のままⅤから並べたモード。Ⅴm7 の ♭2 はアヴォイド。" },
     { scaleId: "minor-pentatonic", priority: 2, reasonJa: "♭2 を避けた安全なマイナーの響き。" },
+    { scaleId: "miyakobushi", priority: 3, reasonJa: "フリジアンの中の 5 音を抜き出した都節音階で和風に。" },
   ] },
   { id: "minor-V7", match: { relation: ["diatonic"], keyMode: ["minor"], interval: [7], quality: PLAIN_DOM }, suggestions: [
     { scaleId: "phrygian-dominant", priority: 1, reasonJa: "キーのハーモニックマイナーをⅤから並べたモード（HmP5↓）。♭9・♭13 を含み、マイナーのⅠへ強く解決する。" },
@@ -308,6 +313,7 @@ export const SCALE_RULES: ScaleRule[] = [
     { scaleId: "dorian", priority: 1, reasonJa: "キー外のマイナー 7th には、アヴォイドの少ないドリアンが万能。" },
     { scaleId: "aeolian", priority: 2, reasonJa: "♭6 で暗さを出すならナチュラルマイナー。" },
     { scaleId: "minor-pentatonic", priority: 2, reasonJa: "コードトーン中心の安全策。" },
+    { scaleId: "minyo", priority: 3, reasonJa: "民謡音階（マイナーペンタと同じ 5 音）として扱い、和風のフレーズに。" },
   ] },
   { id: "nd-m6", match: { relation: ["non-diatonic", "borrowed"], quality: ["m6"] }, suggestions: [
     { scaleId: "dorian", priority: 1, reasonJa: "長 6 度を含むマイナースケール。" },
@@ -534,6 +540,8 @@ export function keyScaleSuggestions(key: Key): KeyScaleSuggestion[] {
     mk("blues", 2, "♭5 を加えたブルーススケール。ロック／ブルースの泥くささを。"),
     mk("harmonic-minor", 2, "Ⅴ7 を含むマイナー進行なら、7 度を上げたハーモニックマイナーがドミナント上で特に合う。"),
     mk("dorian", 3, "♭6 を 6 に替えると、クールで明るめのマイナー感（Ⅳ7 を含む進行など）。"),
+    mk("minyo", 3, "マイナーペンタと同じ 5 音を民謡音階として扱う。4 度と R を核にすると日本民謡風。"),
+    mk("miyakobushi", 3, "♭2・♭6 を含む都節音階。マイナー進行に「陰」の和風の響きを足す。"),
   ];
 }
 

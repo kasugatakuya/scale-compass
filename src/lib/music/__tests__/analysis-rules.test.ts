@@ -63,6 +63,14 @@ describe("analysis: ダイアトニック", () => {
     expect(allIds(prog, 5)[0]).toBe("phrygian");
     expect(allIds(prog, 6)[0]).toBe("lydian");
   });
+  it("和風スケール: Em7 に都節、Am7 に民謡音階が応用として出る", () => {
+    const miyako = suggestScales(a[5], C).find((s) => s.scale.id === "miyakobushi")!;
+    expect(miyako.priority).toBe(3);
+    expect(miyako.notes.map((n) => n.name)).toEqual(["E", "F", "A", "B", "C"]);
+    expect(miyako.missingChordTones).toEqual(["♭3", "♭7"]);
+    const minyo = suggestScales(a[3], C).find((s) => s.scale.id === "minyo")!;
+    expect(minyo.coversChordTones).toBe(true);
+  });
   it("アヴォイドノートの判定（Cmaj7 のアイオニアンでは F）", () => {
     const s = suggestScales(a[2], C)[0];
     expect(s.scale.id).toBe("ionian");
@@ -243,6 +251,7 @@ describe("scale-rules: 整合性", () => {
   it("キー全体のスケール", () => {
     expect(keyScaleSuggestions(C)[0].scale.id).toBe("ionian");
     expect(keyScaleSuggestions(Am)[0].scale.id).toBe("aeolian");
+    expect(keyScaleSuggestions(Am).map((s) => s.scale.id)).toEqual(expect.arrayContaining(["minyo", "miyakobushi"]));
     expect(keyScaleSuggestions(C)[0].notes.map((n) => n.name)).toEqual(["C", "D", "E", "F", "G", "A", "B"]);
     expect(keyScaleSuggestions(C).some((s) => s.scale.id === "ryukyu")).toBe(true);
   });

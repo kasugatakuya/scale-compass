@@ -8,7 +8,7 @@ export type ScaleId =
   | "melodic-minor" | "dorian-b2" | "lydian-augmented" | "lydian-b7" | "mixolydian-b6" | "locrian-#2" | "altered"
   | "harmonic-minor" | "phrygian-dominant"
   | "whole-tone" | "diminished" | "combination-of-diminished"
-  | "major-pentatonic" | "minor-pentatonic" | "blues" | "major-blues" | "ryukyu"
+  | "major-pentatonic" | "minor-pentatonic" | "blues" | "major-blues" | "ryukyu" | "miyakobushi" | "minyo"
   | "bebop-dominant";
 
 export type ScaleCategory =
@@ -60,6 +60,8 @@ export const SCALES: ScaleDef[] = [
   { id: "major-blues", nameJa: "メジャーブルーススケール", nameEn: "Major blues scale", category: "blues", intervals: ["1P", "2M", "3m", "3M", "5P", "6M"], descriptionJa: "メジャーペンタに ♭3 を加えた 6 音。カントリー／ブルースの明るいフレーズに。" },
 
   { id: "ryukyu", nameJa: "琉球スケール（沖縄音階）", nameEn: "Ryukyu scale", aliasesJa: ["沖縄スケール", "ニロ抜き長音階"], category: "pentatonic", intervals: ["1P", "3M", "4P", "5P", "7M"], descriptionJa: "メジャースケールから 2・6 度を抜いた 5 音（ニロ抜き）。沖縄民謡の独特の明るさと哀感を生む。4 度と長 7 度が半音でぶつかる動きが特徴。" },
+  { id: "miyakobushi", nameJa: "都節音階（みやこぶし）", nameEn: "Miyako-bushi (In scale)", aliasesJa: ["陰音階", "In スケール"], category: "pentatonic", intervals: ["1P", "2m", "4P", "5P", "6m"], descriptionJa: "半音を含む日本の 5 音音階（R・♭2・4・5・♭6）。三味線や箏の「和」の響き。♭2 → R、♭6 → 5 の半音下降が特徴で、フリジアンの中に収まる。" },
+  { id: "minyo", nameJa: "民謡音階", nameEn: "Min-yo scale", aliasesJa: ["ニロ抜き短音階", "陽音階（田舎節）"], category: "pentatonic", intervals: ["1P", "3m", "4P", "5P", "7m"], descriptionJa: "日本民謡（ソーラン節など）の基本となる 5 音。構成音はマイナーペンタトニックと同じだが、4 度と R（または 5 度）を核にして ♭3・♭7 を経過的に扱うと和風になる。" },
   { id: "bebop-dominant", nameJa: "ビバップ・ドミナント", nameEn: "Bebop dominant", category: "bebop", intervals: ["1P", "2M", "3M", "4P", "5P", "6M", "7m", "7M"], descriptionJa: "ミクソリディアンに長 7 度を加えた 8 音。8 分音符でコードトーンが拍頭に来るジャズ用スケール。" },
 ];
 

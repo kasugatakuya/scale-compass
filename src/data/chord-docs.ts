@@ -82,7 +82,7 @@ export const CHORD_DOCS: ChordDoc[] = [
     formula: ["R", "♭3", "5"],
     sound: "暗く、切ない、落ち着いた響き。",
     usage: "メジャーキーのⅡm・Ⅲm・Ⅵm、マイナーキーのⅠm・Ⅳm・Ⅴm に現れる。",
-    scales: ["aeolian", "dorian", "phrygian", "minor-pentatonic", "blues"],
+    scales: ["aeolian", "dorian", "phrygian", "minor-pentatonic", "blues", "minyo", "miyakobushi"],
     tips: {
       guitar: "E フォーム（6 弦ルート）と A フォーム（5 弦ルート）のマイナーバレーが基本。メジャーとの違いは 3 度の音を 1 フレット下げるだけです。",
       bass: "ルート・♭3・5 のアルペジオで「マイナーらしさ」を出せます。ルートと 5 度を軸に、♭3 を経過的に入れると滑らかなラインになります。",

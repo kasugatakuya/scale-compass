@@ -22,6 +22,9 @@ describe("scales", () => {
     expect(scalePcs(SCALE_BY_ID["whole-tone"], 0)).toEqual([0, 2, 4, 6, 8, 10]);
     expect(scaleNotes(SCALE_BY_ID.ryukyu, "C", 0).map((n) => n.name)).toEqual(["C", "E", "F", "G", "B"]);
     expect(scaleNotes(SCALE_BY_ID.ryukyu, "C", 0).map((n) => n.degree)).toEqual(["R", "3", "4", "5", "7"]);
+    expect(scaleNotes(SCALE_BY_ID.miyakobushi, "E", 4).map((n) => n.name)).toEqual(["E", "F", "A", "B", "C"]);
+    expect(scaleNotes(SCALE_BY_ID.miyakobushi, "E", 4).map((n) => n.degree)).toEqual(["R", "♭2", "4", "5", "♭6"]);
+    expect(scalePcs(SCALE_BY_ID.minyo, 9)).toEqual(scalePcs(SCALE_BY_ID["minor-pentatonic"], 9));
   });
   it("コードトーンを含むスケールを探せる", () => {
     const ids = scalesContaining([0, 4, 7, 10], 0).map((s) => s.id);
