@@ -9,6 +9,7 @@ const NAV = [
   { href: "/", label: "スケール提案", short: "提案" },
   { href: "/progressions", label: "コード進行集", short: "進行集" },
   { href: "/chords", label: "コード解説", short: "コード" },
+  { href: "/analyze", label: "音源解析", short: "解析" },
 ];
 
 export function Header() {

@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/`, lastModified, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE_URL}/progressions`, lastModified, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/chords`, lastModified, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/analyze`, lastModified, changeFrequency: "monthly", priority: 0.7 },
     ...CHORD_DOCS.map((doc) => ({
       url: `${SITE_URL}/chords/${doc.slug}`,
       lastModified,
