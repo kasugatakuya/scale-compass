@@ -5,7 +5,7 @@
  */
 import type { ChordAnalysis, Relation } from "./analysis";
 import { corePcs } from "./analysis";
-import { type ChordQuality, DOMINANT_QUALITIES, MINOR_QUALITIES } from "./chords";
+import { type ChordQuality, DOMINANT_QUALITIES, MINOR_QUALITIES, QUALITY_BY_ID } from "./chords";
 import { type Key, keyLabel, type KeyMode, keyScale, nameInKey } from "./key";
 import { mod12, type NoteName, type PitchClass, transposeNameBySemitones } from "./notes";
 import { SCALE_BY_ID, type ScaleDef, type ScaleId, scaleNotes, scalePcs, type ScaleNote } from "./scales";
@@ -355,8 +355,10 @@ export interface ScaleSuggestion {
   priority: Priority;
   reasonJa: string;
   notes: SuggestedNote[];
-  /** コードトーンをすべて含むか */
+  /** コードトーン（ドミナント系は 5th を除く R・3・7）をすべて含むか */
   coversChordTones: boolean;
+  /** 含まれていないコードトーンのラベル（"5", "7" など） */
+  missingChordTones: string[];
   ruleId: string;
 }
 
@@ -412,7 +414,9 @@ export function buildSuggestion(
     };
   });
   const scaleSet = notes.map((n) => n.pc);
-  const essential = a.chord.tones.filter((t) => t.isChordTone).map((t) => mod12(a.chord.rootPc + t.semitones));
+  const dominant = QUALITY_BY_ID[a.chord.quality].group === "dominant";
+  const missing = a.chord.tones.filter((t) => t.isChordTone && !scaleSet.includes(mod12(a.chord.rootPc + t.semitones)));
+  const essentialMissing = missing.filter((t) => !(dominant && t.role === "5"));
   return {
     id: `${scaleId}@${rootPc}`,
     scale,
@@ -421,7 +425,8 @@ export function buildSuggestion(
     priority,
     reasonJa,
     notes,
-    coversChordTones: essential.every((pc) => scaleSet.includes(pc)),
+    coversChordTones: essentialMissing.length === 0,
+    missingChordTones: missing.map((t) => t.label),
     ruleId,
   };
 }

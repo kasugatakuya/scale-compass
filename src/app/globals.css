@@ -1,26 +1,114 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f7f5;
+  --foreground: #1b1b1f;
+  --card: #ffffff;
+  --card-foreground: #1b1b1f;
+  --muted: #eceae6;
+  --muted-foreground: #5f5e66;
+  --border: #d9d6d0;
+  --accent: #0f6e8c;
+  --accent-foreground: #ffffff;
+  --accent-soft: #e0f1f6;
+  --ring: #0f6e8c;
+  --danger: #b4232c;
+  --danger-soft: #fbe4e6;
+
+  /* 指板: Okabe–Ito パレット（色覚多様性に配慮） */
+  --fb-root: #d55e00;
+  --fb-chord: #0072b2;
+  --fb-tension: #009e73;
+  --fb-scale: #8a8a8a;
+  --fb-scale-fill: #ffffff;
+  --fb-marker-text: #ffffff;
+  --fb-wood: #efe6d6;
+  --fb-fret: #a39d93;
+  --fb-string: #6f6a62;
+  --fb-nut: #3f3a33;
+  --fb-inlay: #cfc7b8;
+  --fb-position: rgba(15, 110, 140, 0.12);
+}
+
+.dark {
+  --background: #121317;
+  --foreground: #ececf1;
+  --card: #1b1d23;
+  --card-foreground: #ececf1;
+  --muted: #262930;
+  --muted-foreground: #a3a6b0;
+  --border: #353842;
+  --accent: #4cb8d8;
+  --accent-foreground: #0d1117;
+  --accent-soft: #15333d;
+  --ring: #4cb8d8;
+  --danger: #ff6b74;
+  --danger-soft: #3a1c1f;
+
+  --fb-root: #ff8a3d;
+  --fb-chord: #5aa9e6;
+  --fb-tension: #35c99a;
+  --fb-scale: #9a9ea8;
+  --fb-scale-fill: #1b1d23;
+  --fb-marker-text: #0d1117;
+  --fb-wood: #23201c;
+  --fb-fret: #6a655d;
+  --fb-string: #b6b0a5;
+  --fb-nut: #d8d1c5;
+  --fb-inlay: #4a443c;
+  --fb-position: rgba(76, 184, 216, 0.16);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-ring: var(--ring);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-fb-root: var(--fb-root);
+  --color-fb-chord: var(--fb-chord);
+  --color-fb-tension: var(--fb-tension);
+  --color-fb-scale: var(--fb-scale);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", Meiryo, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  select,
+  input,
+  textarea {
+    color: inherit;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
 }

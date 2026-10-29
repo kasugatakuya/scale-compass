@@ -65,6 +65,14 @@ describe("analysis: ダイアトニック", () => {
     expect(s.notes.filter((n) => n.isAvoid).map((n) => n.name)).toEqual(["F"]);
     expect(s.notes.filter((n) => n.isChordTone).map((n) => n.name)).toEqual(["C", "E", "G", "B"]);
     expect(s.coversChordTones).toBe(true);
+    expect(s.missingChordTones).toEqual([]);
+    const pent = suggestScales(a[2], C).find((x) => x.scale.id === "major-pentatonic")!;
+    expect(pent.coversChordTones).toBe(false);
+    expect(pent.missingChordTones).toEqual(["7"]);
+    // G7 のオルタードは 5th を含まないが、ドミナントでは問題なし
+    const alt = suggestScales(a[1], C).find((x) => x.scale.id === "altered")!;
+    expect(alt.coversChordTones).toBe(true);
+    expect(alt.missingChordTones).toEqual(["5"]);
   });
 });
 
