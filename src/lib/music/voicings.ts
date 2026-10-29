@@ -106,7 +106,8 @@ export function guitarVoicings(chord: ParsedChord, tuning: Tuning, maxFret = 15)
     if (sounded.length < 3) continue;
     const minSounded = Math.min(...sounded);
     const maxSounded = Math.max(...sounded);
-    const baseFret = minSounded === 0 ? 1 : Math.max(1, Math.min(minSounded, maxSounded - 4));
+    // 5 フレット幅の図に収まるなら最低フレットを基準にし、収まらなければ最高フレットから逆算する
+    const baseFret = minSounded === 0 ? 1 : maxSounded - minSounded <= 4 ? minSounded : Math.max(1, maxSounded - 4);
     const pcs = frets.map((f, s) => (f === null ? null : pcAt(tuning, s, f)));
     out.push({ frets, baseFret, rootString: shape.rootString + offset, nameJa: shape.nameJa, pcs });
   }

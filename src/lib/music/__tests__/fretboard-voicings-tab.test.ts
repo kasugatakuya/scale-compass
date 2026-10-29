@@ -118,6 +118,10 @@ describe("voicings", () => {
     expect(v[1].frets).toEqual([null, 9, 11, 9, 10, 9]);
     const low = guitarVoicings(chord("Emaj7"), guitar);
     expect(low[0].frets).toEqual([0, null, 1, 1, 0, null]);
+    expect(low[0].baseFret).toBe(1);
+    const c7 = guitarVoicings(chord("C7"), guitar);
+    expect(c7[0].frets).toEqual([8, 10, 8, 9, 8, 8]);
+    expect(c7[0].baseFret).toBe(8);
   });
   it("ドロップ D でも同じ音が鳴るフレットに変換される", () => {
     const dropD = TUNING_BY_ID["guitar-drop-d"];

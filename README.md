@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Scale Compass（スケールコンパス）
 
-## Getting Started
+コード進行の中で「どのスケールを使えばいいか」の道しるべになる、ギター／ベース向けの Web アプリです。
+コード進行を入力すると、各コードに対して使えるスケールを理由つきで提案し、ギター／ベースの指板上で可視化し、タブ譜に書き出せます。
 
-First, run the development server:
+## 主な機能
+
+### スケール提案ツール（`/`）
+- キー（12 音 × メジャー／マイナー）とコード進行を入力（テキスト入力＋クリックで追加するパレット）
+- 対応コード: メジャー／マイナー、6、m6、7、maj7、m7、m7♭5、dim、dim7、aug、sus2、sus4、7sus4、add9、9、m9、maj9、mMaj7、11、13、7(♭9)、7(♯9)、7(♯11)、7(♭13)、7(♯5)、7alt、スラッシュコード（C/E など）
+- 表記ゆれに対応（`CM7` / `Cmaj7` / `C△7`、`Bm7b5` / `Bø`、`C°7` / `Cdim7`、`C-7` / `Cm7` など）
+- 各コードのローマ数字表記（Ⅱm7、Ⅴ7、♭Ⅶ7、Ⅴ7/Ⅱ …）と機能（トニック／サブドミナント／ドミナント）
+- ダイアトニック／セカンダリードミナント／裏コード／借用和音（モーダルインターチェンジ）／経過ディミニッシュ／関連Ⅱm7 を自動判定し、理由を日本語で説明
+- おすすめスケールを優先度つきで複数提示（ペンタトニック／ブルース系も含む）。構成音はルート・コードトーン・テンション・スケール音・アヴォイド候補を色分け
+- 進行全体に使える共通スケール（キーのスケール）も提示
+- 入力状態は URL クエリに反映されるので、そのまま共有できます
+- Tone.js によるコード／スケールの試聴
+
+### 指板ビュー
+- ギター（6 弦／7 弦）、ベース（4 弦／5 弦）。標準、ドロップ D、半音下げ、全音下げ、DADGAD、オープン G、5 弦ベースの Low B／High C などのプリセットとカスタムチューニング
+- フレット範囲指定、ポジションマーク、左利き用の反転表示
+- 音名表示／度数表示／ドット表示の切替
+- ルート（朱色の丸）・コードトーン（青のひし形）・テンション（緑の四角）・スケール音（白丸）を色と形で区別（Okabe–Ito パレットで色覚多様性に配慮）
+- ボックス（CAGED 系）／3NPS（1 弦 3 音）ポジション単位のハイライト
+- コードの押さえ方（ギターは 6 弦／5 弦／4 弦ルートの複数フォーム、ベースはコードトーンの配置）
+- 横スクロール対応で、スマホの縦向きでも閲覧できます
+
+### タブ譜出力
+- 指板でクリックした音、コードフォーム、スケールの上行／下降（ポジション指定）、コード進行全体をタブ譜に変換
+- ASCII テキスト（コピーボタン付き）、SVG／PNG ダウンロード
+- 楽器・チューニングに応じた弦数／弦名で出力
+
+### コード進行集（`/progressions`）
+- 王道進行、カノン進行、小室進行、Ⅱ-Ⅴ-Ⅰ、12 小節ブルース、逆循環、Just the Two of Us 進行、Ⅰ-♭Ⅶ-Ⅳ、アンダルシア進行、ジャズのターンアラウンドなど 20 種類以上
+- 解説、雰囲気・ジャンル、代表的な使用例、キー C（マイナーは A）での具体例、演奏のヒント
+- ジャンル／ムード／難易度での絞り込みと検索
+- 「スケール提案ツールで開く」でキー指定込みでツールに遷移
+
+### コード解説（`/chords`、`/chords/[type]`）
+- 三和音、セブンス系、ナインス系、11th／13th、ドミナント 7th の役割、裏コード、テンションとオルタードテンション、ダイアトニックコード、コードの機能、代理コードと借用和音、転回形とスラッシュコード
+- 構成音（度数）、響きの特徴、使われる場面、相性のよいスケール、C を例にした指板上の位置、コードダイアグラム、タブ譜、ギター／ベースでの弾き方のコツ、用語解説、試聴
+
+## 技術スタック
+
+- Next.js 16（App Router、静的書き出し `output: "export"`）/ TypeScript（strict）/ React 19 / Tailwind CSS v4
+- `next-themes`: ダークモード（OS 設定追従＋手動切替）
+- `tonal`: 音名のスペリング・移調・インターバル計算（E♯ など異名同音を正しく表記するため）
+- `tone`: コード／スケールの試聴（クリック時に動的 import）
+- Vitest: 音楽理論ロジックの単体テスト
+
+## セットアップ
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+npm run build      # 静的書き出し（out/ に生成）
+npm run start      # out/ をローカル配信（npx serve）
+npm run lint       # ESLint
+npm run typecheck  # tsc --noEmit
+npm run test       # Vitest
+npm run check      # typecheck + lint + test + build をまとめて実行
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ディレクトリ構成
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                   # ページ（/ , /progressions, /chords, /chords/[type]）
+├── components/
+│   ├── layout/            # ヘッダー、ロゴ、テーマ切替
+│   ├── fretboard/         # 指板、コードダイアグラム、凡例、コントロール
+│   ├── tool/              # スケール提案ツールの UI
+│   ├── tab/               # タブ譜パネル
+│   ├── progressions/      # コード進行集
+│   ├── chords/            # コード解説
+│   └── audio/             # 試聴ボタン
+├── data/
+│   ├── progressions.ts    # コード進行集のデータ（型付き）
+│   ├── chord-docs.ts      # コード解説のコンテンツ（型付き）
+│   └── tunings.ts         # チューニングのプリセット
+├── hooks/                 # URL 同期、コピー
+└── lib/
+    ├── music/             # 音楽理論ロジック（純粋関数、React 非依存）
+    │   ├── notes.ts          # 音名・ピッチクラス・度数
+    │   ├── chords.ts         # コード品質の定義
+    │   ├── chord-parser.ts   # コード名のパース（表記ゆれ対応）
+    │   ├── scales.ts         # スケール定義表
+    │   ├── key.ts            # キー、ダイアトニックコード、ローマ数字
+    │   ├── analysis.ts       # 進行の解析（セカンダリードミナント、借用など）
+    │   ├── scale-rules.ts    # スケール提案ルール表（データ駆動）
+    │   ├── fretboard.ts      # 指板マッピング、ポジション算出
+    │   ├── voicings.ts       # コードフォーム
+    │   ├── tab.ts / tab-svg.ts  # タブ譜（ASCII / SVG）
+    │   └── __tests__/        # Vitest
+    ├── url-state.ts       # ツールの状態 ⇄ URL クエリ
+    └── audio.ts           # Tone.js ラッパ
+```
 
-## Learn More
+## スケール提案ルールの拡張
 
-To learn more about Next.js, take a look at the following resources:
+`src/lib/music/scale-rules.ts` の `SCALE_RULES` 配列に、マッチ条件（コードの種類・キーとの関係・度数・キーのモード・解決先）と提案（スケール ID・優先度・理由）を追加するだけで、新しい提案ルールを足せます。スケール自体は `src/lib/music/scales.ts` の `SCALES` に定義します。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## URL クエリ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| パラメータ | 内容 | 例 |
+|---|---|---|
+| `key` / `mode` | キー | `key=C&mode=major` |
+| `prog` | コード進行（`\|` 区切り） | `prog=Dm7\|G7\|Cmaj7\|Am7` |
+| `inst` / `tuning` / `strings` | 楽器、チューニング、カスタム弦（MIDI） | `inst=bass5&tuning=bass5-low-b` |
+| `i` / `scale` | 選択中のコード番号（-1 はキー全体）とスケール | `i=1&scale=altered@7` |
+| `view` / `lefty` / `frets` / `pos` | 表示モード、左利き、フレット範囲、ポジション | `view=name&lefty=1&frets=0-12&pos=3nps-2` |
