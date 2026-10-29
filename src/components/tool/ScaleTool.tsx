@@ -22,6 +22,8 @@ import { KeyScalePanel } from "./KeyScalePanel";
 import { FretboardPanel } from "./FretboardPanel";
 import { TabPanel, type TabMode } from "@/components/tab/TabPanel";
 import { PlayButton } from "@/components/audio/PlayButton";
+import { ProgressionPlayButton } from "@/components/audio/ProgressionPlayButton";
+import { chordToMidis } from "@/lib/audio";
 
 export function ScaleTool() {
   const [state, update] = useUrlState();
@@ -142,9 +144,12 @@ export function ScaleTool() {
       <Card
         title="1. キーとコード進行"
         actions={
-          <Button size="sm" onClick={() => copyUrl(window.location.href)}>
-            {copiedUrl ? "URL をコピーしました" : "この設定の URL をコピー"}
-          </Button>
+          <>
+            <ProgressionPlayButton chords={chords.map((c) => c.symbol)} className="py-1 text-xs" />
+            <Button size="sm" onClick={() => copyUrl(window.location.href)}>
+              {copiedUrl ? "URL をコピーしました" : "この設定の URL をコピー"}
+            </Button>
+          </>
         }
       >
         <div className="flex flex-col gap-4">
@@ -182,7 +187,7 @@ export function ScaleTool() {
                 selectedScaleId={selectedSuggestion?.id ?? null}
                 onActivate={() => update({ selected: inputIndex, scale: null })}
                 onSelectScale={(s) => update({ selected: inputIndex, scale: s.id })}
-                playButton={<PlayButton kind="chord" midis={chordMidis(a.chord.rootPc, a.chord.tones.map((t) => t.semitones), a.chord.bassPc)} label={`${a.chord.symbol} を試聴`} />}
+                playButton={<PlayButton kind="chord" midis={chordToMidis(a.chord)} label={`${a.chord.symbol} を試聴`} />}
               />
             );
           })}
@@ -225,10 +230,3 @@ export function ScaleTool() {
   );
 }
 
-/** コードを鳴らすための MIDI 列（ルートを C3〜B3 付近に置く） */
-function chordMidis(rootPc: number, semitones: number[], bassPc?: number): number[] {
-  const root = 48 + mod12(rootPc);
-  const notes = semitones.map((s) => root + s);
-  if (bassPc !== undefined) notes.unshift(36 + mod12(bassPc));
-  return notes;
-}

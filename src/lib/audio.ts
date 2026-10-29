@@ -80,3 +80,56 @@ export async function playNote(midi: number, duration = 1.2): Promise<void> {
   const engine = await getEngine();
   pluck(engine, midi, engine.Tone.now() + 0.02, duration);
 }
+
+/** コードの構成音を試聴用の MIDI 列にする（ルートを C3〜B3、ベース音はその 1 オクターブ下） */
+export function chordToMidis(chord: { rootPc: number; bassPc?: number; tones: { semitones: number }[] }): number[] {
+  const root = 48 + ((chord.rootPc % 12) + 12) % 12;
+  const notes = chord.tones.map((t) => root + t.semitones);
+  if (chord.bassPc !== undefined) notes.unshift(36 + ((chord.bassPc % 12) + 12) % 12);
+  return notes;
+}
+
+export interface ProgressionPlayback {
+  /** 再生終了（停止含む）で解決 */
+  done: Promise<void>;
+  stop: () => void;
+}
+
+/**
+ * コード進行を順番に鳴らす。各コードは secondsPerChord 秒ずつ。
+ * onChord は鳴り始めたコードの番号（終了時は -1）を通知する。
+ */
+export async function playProgression(chords: number[][], secondsPerChord = 1.1, onChord?: (index: number) => void): Promise<ProgressionPlayback> {
+  const engine = await getEngine();
+  const start = engine.Tone.now() + 0.05;
+  const timers: ReturnType<typeof setTimeout>[] = [];
+  let stopped = false;
+  let finish: () => void = () => {};
+  const done = new Promise<void>((resolve) => {
+    finish = resolve;
+  });
+
+  chords.forEach((midis, i) => {
+    const t = start + i * secondsPerChord;
+    const sorted = [...midis].sort((a, b) => a - b);
+    sorted.forEach((m, j) => pluck(engine, m, t + j * 0.04, secondsPerChord * 0.95));
+    timers.push(setTimeout(() => onChord?.(i), i * secondsPerChord * 1000 + 50));
+  });
+  timers.push(
+    setTimeout(() => {
+      onChord?.(-1);
+      finish();
+    }, chords.length * secondsPerChord * 1000 + 400),
+  );
+
+  const stop = () => {
+    if (stopped) return;
+    stopped = true;
+    timers.forEach(clearTimeout);
+    const now = engine.Tone.now();
+    for (const v of engine.voices) v.triggerRelease(now);
+    onChord?.(-1);
+    finish();
+  };
+  return { done, stop };
+}

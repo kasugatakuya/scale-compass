@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { ALL_CATEGORIES, ALL_GENRES, ALL_MOODS, DIFFICULTY_LABEL, type Genre, type Mood, type Progression, PROGRESSIONS } from "@/data/progressions";
 import { toolHref } from "@/lib/url-state";
 import { Button, Chip, cn } from "@/components/ui";
+import { ProgressionPlayButton } from "@/components/audio/ProgressionPlayButton";
 
 export function ProgressionList() {
   const [query, setQuery] = useState("");
@@ -100,6 +101,7 @@ export function ProgressionList() {
 
 function ProgressionCard({ p }: { p: Progression }) {
   const [open, setOpen] = useState(false);
+  const [current, setCurrent] = useState(-1);
   const href = toolHref(p.key.tonic, p.key.mode, p.chords);
   return (
     <article id={p.id} className="flex flex-col gap-3 rounded-xl border border-border bg-card p-4 shadow-sm">
@@ -118,10 +120,23 @@ function ProgressionCard({ p }: { p: Progression }) {
           ))}
         </div>
       </header>
-      <div className="rounded-md bg-muted px-3 py-2">
-        <p className="font-mono text-sm leading-relaxed">{p.roman.join(" → ")}</p>
-        <p className="mt-1 font-mono text-xs text-muted-foreground">
-          キー {p.key.tonic} {p.key.mode === "major" ? "メジャー" : "マイナー"}: {p.chords.join(" | ")}
+      <div className="rounded-md bg-muted px-3 py-2" aria-live="off">
+        <p className="flex flex-wrap items-center gap-x-1 font-mono text-sm leading-relaxed">
+          {p.roman.map((r, i) => (
+            <span key={i} className="flex items-center gap-x-1">
+              <span className={cn("rounded px-1 transition-colors", current === i && "bg-accent text-accent-foreground")}>{r}</span>
+              {i < p.roman.length - 1 && <span className="text-muted-foreground">→</span>}
+            </span>
+          ))}
+        </p>
+        <p className="mt-1 flex flex-wrap items-center gap-x-1 font-mono text-xs text-muted-foreground">
+          <span>キー {p.key.tonic} {p.key.mode === "major" ? "メジャー" : "マイナー"}:</span>
+          {p.chords.map((c, i) => (
+            <span key={i} className="flex items-center gap-x-1">
+              <span className={cn("rounded px-1 transition-colors", current === i && "bg-accent text-accent-foreground")}>{c}</span>
+              {i < p.chords.length - 1 && <span>|</span>}
+            </span>
+          ))}
         </p>
       </div>
       <p className="text-sm leading-relaxed">{p.description}</p>
@@ -142,6 +157,7 @@ function ProgressionCard({ p }: { p: Progression }) {
         </div>
       )}
       <div className="mt-auto flex flex-wrap items-center gap-2 pt-1">
+        <ProgressionPlayButton chords={p.chords} onChord={setCurrent} />
         <Link href={href} className="inline-flex items-center rounded-md bg-accent px-3 py-1.5 text-sm font-medium text-accent-foreground hover:opacity-90">
           スケール提案ツールで開く
         </Link>
