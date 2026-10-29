@@ -64,6 +64,14 @@ npm run test       # Vitest
 npm run check      # typecheck + lint + test + build をまとめて実行
 ```
 
+## 公開 URL の設定（サイトマップ・canonical）
+
+`sitemap.xml` と `robots.txt` はビルド時に自動生成されます。公開 URL は環境変数 `NEXT_PUBLIC_SITE_URL` で指定してください（`.env.example` 参照）。未設定の場合は Vercel／Cloudflare Pages の自動変数を使い、それもなければ仮ドメインになります。
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://your-domain.example npm run build
+```
+
 ## ディレクトリ構成
 
 ```

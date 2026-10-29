@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CHORD_DOCS, DOC_GROUP_LABEL, DOC_GROUP_ORDER } from "@/data/chord-docs";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/chords" },
   title: "コード解説",
   description: "三和音、セブンス、ナインス、テンション、ドミナントの役割、裏コード、ダイアトニックコード、転回形など、コードの種類ごとに構成音・響き・使われる場面・相性のよいスケールを解説。",
 };

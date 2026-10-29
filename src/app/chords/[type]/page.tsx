@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ type: str
   const { type } = await params;
   const doc = DOC_BY_SLUG[type];
   if (!doc) return {};
-  return { title: doc.title, description: `${doc.title}の構成音・響き・使われる場面・相性のよいスケールを、ギター／ベースの指板とタブ譜で解説。` };
+  return { title: doc.title, alternates: { canonical: `/chords/${doc.slug}` }, description: `${doc.title}の構成音・響き・使われる場面・相性のよいスケールを、ギター／ベースの指板とタブ譜で解説。` };
 }
 
 export default async function ChordDocPage({ params }: { params: Promise<{ type: string }> }) {

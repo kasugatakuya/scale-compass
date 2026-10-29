@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ProgressionList } from "@/components/progressions/ProgressionList";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/progressions" },
   title: "コード進行集",
   description: "王道進行、カノン進行、小室進行、Ⅱ-Ⅴ-Ⅰ、12 小節ブルースなど、よく使われるコード進行をカテゴリ別に解説。キー指定込みでスケール提案ツールに送れます。",
 };
