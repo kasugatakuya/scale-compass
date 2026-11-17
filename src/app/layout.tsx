@@ -46,6 +46,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">
             Scale Compass —
             コード進行の中で「どのスケールを使えばいいか」の道しるべ
+            <p className="mt-2 px-4">
+              関連サイト{" "}
+              <a
+                href="https://frontend-three-lemon-56js69hvyd.vercel.app/"
+                target="_blank"
+                rel="noopener"
+                className="font-bold text-foreground underline underline-offset-4"
+              >
+                BandMatch — バンドメンバー募集・加入希望
+                <span className="sr-only">(新しいタブで開きます)</span>
+              </a>
+            </p>
           </footer>
         </ThemeProvider>
       </body>
